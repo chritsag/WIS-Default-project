@@ -55,9 +55,12 @@ jobs:
         #PRIVATE_SSH_KEY: sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc= ansible-generated on jpo-christsagalos-live-prod
         ## path of the file-s to deploy
         #REPOSITORY_PATH: ''
+        
     - name: Variables
-      run: |
-        echo ${{ secrets.SSH_PRIVATE_KEY }}
+      run: 'echo "$SSH_PRIVATE_KEY" > key'
+      shell: bash
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         
     - name: ssh deploy
       # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
