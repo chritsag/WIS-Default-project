@@ -62,7 +62,7 @@ jobs:
       uses: easingthemes/ssh-deploy@v4.1.8
       with:
         # Private key part of an SSH key pair
-        SSH_PRIVATE_KEY: sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc= ansible-generated on jpo-christsagalos-live-prod
+        SSH_PRIVATE_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc=
         # Remote host
         REMOTE_HOST: 34.154.5.157
         # Remote user
