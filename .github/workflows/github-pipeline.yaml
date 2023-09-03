@@ -83,18 +83,20 @@ jobs:
           echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo ******** 2 **
-          ssh-keyscan -p ${{ secrets.PORT }} -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc=' >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
+# ssh-keyscan -p 36409 -t rsa 34.154.5.157 >> ~/.ssh/known_hosts
+          
       env:
           PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          PORT: ${{ secrets.PORT }}
+          SERVER_IP: 34.154.5.157
+          PORT: 36409
 
     - name: Rsync Deploy
       run: |
-          rsync -avz --exclude 'exclude_pattern' --delete ./ ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:~/
+          rsync -avz --exclude 'exclude_pattern' --delete ./ christsagalos@34.154.5.157:~/
       env:
-          USER: ${{ secrets.USER }}
+          USER: christsagalos
 
 
         
