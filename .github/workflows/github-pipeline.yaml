@@ -13,7 +13,6 @@ on:
         - info
         - warning
         - debug
-WIS_DEPLOY_KEY
 
 jobs:
   build:
