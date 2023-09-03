@@ -1,4 +1,5 @@
-name: Build and Deploy
+
+WIS_DEPLOY_KEYname: Build and Deploy
 
 on:
   workflow_dispatch:
@@ -12,6 +13,7 @@ on:
         - info
         - warning
         - debug
+WIS_DEPLOY_KEY
 
 jobs:
   build:
@@ -41,60 +43,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install rsync
-      run: |
-          rsync --version
-          sudo apt-get update -y
-          sudo apt-get install rsync -y
 
-    - name: Set up SSH key
+    - name: Set Up SSH Key
       run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.WIS_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DEPLOY_KEY: ${{ secrets.WIS_DEPLOY_KEY }}
+          YOUR_SERVER_IP: ${{ secrets.SERVER_IP }}
 
-    - name: Install rsync on Remote Server
+    - name: Push to Remote Server
       run: |
-          ssh -i ~/.ssh/id_rsa -p ${{ secrets.PORT }} ${{ secrets.USER }}@${{ secrets.SERVER_IP }} 'sudo apt-get update -y && sudo apt-get install rsync -y'
+          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/.
+          git push deploy main
       env:
           USER: ${{ secrets.USER }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          PORT: ${{ secrets.PORT }}
-          
-    - name: rsync deployment
-      # uses: D3rHase/rsync-deploy-action@5af3ec7ad17529c7c223819f54fe0d5cad1357e1
-      uses: D3rHase/rsync-deploy-action@v0.2
-      with:
-        # hostname / IP of the server
-        HOST: 34.154.5.157
-        ## ssh port of the server
-        PORT: 36409
-        ## user of the server
-        USER: 'christsagalos'
-        ## private ssh key registered on the server
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        ## path of the file-s to deploy
-        REPOSITORY_PATH: '.'
-
-    #- name: ssh deploy
-   #  # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
-   #   uses: easingthemes/ssh-deploy@v4.1.8
-   #   with:
-   #     # Private key part of an SSH key pair
-   #     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
-    #    # Remote host
-   #     REMOTE_HOST: 34.154.5.157
-        # Remote user
-   #     REMOTE_USER: 'christsagalos'
-        # Remote port
-    #    REMOTE_PORT: 36409
-        # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
-        # SOURCE: # optional, default is 
-        # Target directory
-    #    TARGET: ~/
-
         
 
