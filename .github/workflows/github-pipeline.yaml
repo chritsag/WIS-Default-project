@@ -41,6 +41,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install rsync
+      run: |
+          rsync --version
+          sudo apt-get update -y
+          sudo apt-get install rsync -y
+
+    - name: Set up SSH key
+      run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+      env:
+          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
+
+    - name: Install rsync on Remote Server
+      run: |
+          ssh -i ~/.ssh/id_rsa -p ${{ secrets.PORT }} ${{ secrets.USER }}@${{ secrets.SERVER_IP }} 'sudo apt-get update -y && sudo apt-get install rsync -y'
+      env:
+          USER: ${{ secrets.USER }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          PORT: ${{ secrets.PORT }}
+          
     - name: rsync deployment
       # uses: D3rHase/rsync-deploy-action@5af3ec7ad17529c7c223819f54fe0d5cad1357e1
       uses: D3rHase/rsync-deploy-action@v0.2
