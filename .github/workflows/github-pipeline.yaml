@@ -50,11 +50,11 @@ jobs:
     - name: Set up SSH key
       run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
       env:
-          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Install rsync on Remote Server
       run: |
@@ -75,7 +75,7 @@ jobs:
         ## user of the server
         USER: 'christsagalos'
         ## private ssh key registered on the server
-        PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         ## path of the file-s to deploy
         REPOSITORY_PATH: '.'
 
