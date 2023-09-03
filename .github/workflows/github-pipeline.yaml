@@ -54,7 +54,7 @@ jobs:
 
     - name: Push to Remote Server
       run: |
-          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/.
+          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project
           git push deploy main
       env:
           USER: ${{ secrets.USER }}
