@@ -52,10 +52,14 @@ jobs:
           DEPLOY_KEY: ${{ secrets.WIS_DEPLOY_KEY }}
           YOUR_SERVER_IP: ${{ secrets.SERVER_IP }}
 
-    - name: Push to Remote Server
+    - name: Deploy to Remote Server
       run: |
-          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/WIS-Default-project/
-          git push deploy main
+          git clone ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:./WIS-Default-project/WIS-Default-project.git ./Project
+          cp -r . ./Project
+          cd Project
+          git add .
+          git commit -m "Deploy from GitHub Actions"
+          git push origin main
       env:
           USER: ${{ secrets.USER }}
         
