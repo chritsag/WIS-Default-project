@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: WIS Build and Deploy
 
 on:
   workflow_dispatch:
