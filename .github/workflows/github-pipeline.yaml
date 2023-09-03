@@ -83,10 +83,10 @@ jobs:
           echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo ********
-          echo ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts
           echo ******** 2 **
           ssh-keyscan -p ${{ secrets.PORT }} -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-          echo ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts
       env:
           PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
