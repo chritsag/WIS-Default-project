@@ -56,26 +56,43 @@ jobs:
         ## path of the file-s to deploy
         #REPOSITORY_PATH: ''
         
-    - name: Variables
-      run: |
-        echo $SSH_PRIVATE_KEY
-
-    - name: ssh deploy
-      # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
-      uses: easingthemes/ssh-deploy@v4.1.8
-      with:
-        # Private key part of an SSH key pair
-        SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
-        # Remote host
-        REMOTE_HOST: 34.154.5.157
+   # - name: Variables
+   #   run: |
+   #     echo $SSH_PRIVATE_KEY
+#
+    #- name: ssh deploy
+   #  # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
+   #   uses: easingthemes/ssh-deploy@v4.1.8
+   #   with:
+   #     # Private key part of an SSH key pair
+   #     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+    #    # Remote host
+   #     REMOTE_HOST: 34.154.5.157
         # Remote user
-        REMOTE_USER: 'christsagalos'
+   #     REMOTE_USER: 'christsagalos'
         # Remote port
-        REMOTE_PORT: 36409
+    #    REMOTE_PORT: 36409
         # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
         # SOURCE: # optional, default is 
         # Target directory
-        TARGET: ~/
+    #    TARGET: ~/
+
+    - name: Set Up SSH Key
+      run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{ secrets.PORT }} -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+      env:
+          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          PORT: ${{ secrets.PORT }}
+
+    - name: Rsync Deploy
+      run: |
+          rsync -avz --exclude 'exclude_pattern' --delete ./ ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:~/
+      env:
+          USER: ${{ secrets.USER }}
 
 
         
