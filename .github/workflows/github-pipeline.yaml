@@ -82,8 +82,6 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo ********
-          cat ~/.ssh/known_hosts
           echo ******** 2 **
           ssh-keyscan -p ${{ secrets.PORT }} -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
