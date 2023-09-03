@@ -58,14 +58,14 @@ jobs:
         
     - name: Variables
       run: |
-        echo ${{ variables.SSH_PRIVATE_KEY }}
+        echo $SSH_PRIVATE_KEY
 
     - name: ssh deploy
       # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
       uses: easingthemes/ssh-deploy@v4.1.8
       with:
         # Private key part of an SSH key pair
-        SSH_PRIVATE_KEY: ${{ variables.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
         # Remote host
         REMOTE_HOST: 34.154.5.157
         # Remote user
