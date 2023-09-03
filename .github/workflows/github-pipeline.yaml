@@ -94,7 +94,7 @@ jobs:
 
     - name: Rsync Deploy
       run: |
-          rsync -avz --exclude 'exclude_pattern' --delete ./ christsagalos@34.154.5.157:~/
+          rsync -avz --exclude 'exclude_pattern' --delete "ssh -p 36409" ./ christsagalos@34.154.5.157:~/
       env:
           USER: christsagalos
 
