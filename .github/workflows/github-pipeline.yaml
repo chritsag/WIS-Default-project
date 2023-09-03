@@ -41,25 +41,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    #- name: rsync deployment
-     # # uses: D3rHase/rsync-deploy-action@5af3ec7ad17529c7c223819f54fe0d5cad1357e1
-      #uses: D3rHase/rsync-deploy-action@v0.2
-      #with:
-       # # hostname / IP of the server
-        #HOST: 34.154.5.157
+    - name: rsync deployment
+      # uses: D3rHase/rsync-deploy-action@5af3ec7ad17529c7c223819f54fe0d5cad1357e1
+      uses: D3rHase/rsync-deploy-action@v0.2
+      with:
+        # hostname / IP of the server
+        HOST: 34.154.5.157
         ## ssh port of the server
-        #PORT: 36409
+        PORT: 36409
         ## user of the server
-        #USER: 'christsagalos'
+        USER: 'christsagalos'
         ## private ssh key registered on the server
-        #PRIVATE_SSH_KEY: sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc= ansible-generated on jpo-christsagalos-live-prod
+        PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
         ## path of the file-s to deploy
-        #REPOSITORY_PATH: ''
-        
-   # - name: Variables
-   #   run: |
-   #     echo $SSH_PRIVATE_KEY
-#
+        REPOSITORY_PATH: '.'
+
     #- name: ssh deploy
    #  # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
    #   uses: easingthemes/ssh-deploy@v4.1.8
@@ -76,28 +72,6 @@ jobs:
         # SOURCE: # optional, default is 
         # Target directory
     #    TARGET: ~/
-
-    - name: Set Up SSH Key
-      run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo ******** 2 **
-          echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxfLBbSMckRl1EiDfOl8JZZXCfTOX1sLCX1myhtWH3OZe41fivqYqFGX6b7Oy8fAoHWOraUpHyVMtZH2Wp0ZGTEiaQIg7c36egMOeLrRdL1kUpxECZUAzpxzLyj1tgzkxxAa9yTnODXpCKjfTqz+Xu+o1cBJbqRKwTnmjiZiJtijt9rVi5gXLlfq2T5arrH3EWhYKLkLujY585/sE6j6RJ9PgZxmDH/36WlORbYdpG8uc0MBQ6ti9fF0jU6pkGTEDfUkCbpFItlGoR+N1f6GNIS7GmoghThCxbaI9nSrX8pNwdXrCcH/7zpie1hvx6NC/M8UgSyafMsH7IaPqHgy5xjHdshLORUp5Cy+CIf7XRxNr2mjk+aK8mVY4Bhr4Bgo6wsUN8iZKjWNj0U8dBw9jA8u3L69yUpAj5kvNf3TAt+rYmjPQTM3mMUHQOIgWQmS8E3pe90L24W1ld2MDj/R1AIYnv2bn/B7vEkqktJZo+t8UECVMwWnGmqxblGmWTqAc=' >> ~/.ssh/known_hosts
-          cat ~/.ssh/known_hosts
-# ssh-keyscan -p 36409 -t rsa 34.154.5.157 >> ~/.ssh/known_hosts
-          
-      env:
-          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
-          SERVER_IP: 34.154.5.157
-          PORT: 36409
-
-    - name: Rsync Deploy
-      run: |
-          rsync -avz --exclude 'exclude_pattern' --delete "ssh -p 36409" ./ christsagalos@34.154.5.157:~/
-      env:
-          USER: christsagalos
-
 
         
 
