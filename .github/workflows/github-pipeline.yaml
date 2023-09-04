@@ -54,8 +54,8 @@ jobs:
 
     - name: Deploy to Remote Server
       run: |
-          cd WIS-Default-project/
-          git fetch
+          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}${{ secrets.SSH_PRIVATE_KEY }}:/WIS-Default-project/WIS-Default-project.git
+          git push deploy main
       env:
           USER: ${{ secrets.USER }}
         
