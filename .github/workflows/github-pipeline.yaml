@@ -49,7 +49,7 @@ jobs:
 
     - name: Deploy to Remote Server
       run: |
-          git clone ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project/WIS-Default-project.git
+          git clone ${{ secrets.USER }}@${{ secrets.SERVER_IP }}${{ secrets.SSH_PRIVATE_KEY }}:/www/christsagalos_561/WIS-Default-project/WIS-Default-project.git
           cd WIS-Default-project
           git checkout main
           git pull
