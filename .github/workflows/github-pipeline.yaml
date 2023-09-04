@@ -1,17 +1,10 @@
 name: WordPress Theme Build and Deploy
 
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
+ push:
+  branches:
+    - main    
+
 
 jobs:
   build:
