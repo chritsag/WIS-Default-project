@@ -46,13 +46,10 @@ jobs:
       env:
           DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           YOUR_SERVER_IP: ${{ secrets.SERVER_IP }}
+          PORT: ${{ secrets.PORT }}
 
-    - name: Deploy to Remote Server
+    - name: Rsync Deploy
       run: |
-          git clone ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project/WIS-Default-project.git
-          cd WIS-Default-project
-          git checkout main
-          git pull
-          git push deploy main
+          rsync -avz --exclude 'exclude_pattern' --delete ./ ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project/WIS-Default-project.git
       env:
           USER: ${{ secrets.USER }}
