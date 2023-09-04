@@ -1,4 +1,4 @@
-name: WordPress Theme Build and Deploy
+name: WIS Build and Deploy
 
 on:
   workflow_dispatch:
@@ -26,10 +26,14 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install Dependencies and Build Assets
+    - name: Install Dependencies
       run: |
         cd wp-content/themes/twentytwentyone
         npm install
+
+    - name: Build Assets
+      run: |
+        cd wp-content/themes/twentytwentyone
         npm run build
 
   deploy:
@@ -37,11 +41,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     - name: Set Up SSH Key
       run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -t rsa ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
       env:
           DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -49,10 +54,7 @@ jobs:
 
     - name: Deploy to Remote Server
       run: |
-          git clone ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project
-          cd WIS-Default-project
-          git checkout main
-          git pull
+          git remote add deploy ${{ secrets.USER }}@${{ secrets.SERVER_IP }}:/www/christsagalos_561/WIS-Default-project
           git push deploy main
       env:
           USER: ${{ secrets.USER }}
